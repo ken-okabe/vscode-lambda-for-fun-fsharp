@@ -3,6 +3,9 @@
 
 import * as vscode from 'vscode';
 
+// later to dispose global;y
+let decorationObj: vscode.TextEditorDecorationType;
+
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
 
@@ -17,6 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
     let config: Config = vscode.workspace.getConfiguration().get('lambda-for-fun-fsharp') as Config;
 
     console.log(config);
+
+    decorationType.dispose(); // this has been tricky
     // create a decorator type that we use to decorate the matched keyword
     decorationType = vscode.window.createTextEditorDecorationType(
       {
@@ -27,6 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
         textDecoration: "none; display: none;",
       }
     );
+    decorationObj = decorationType; // pass to global
 
     delay = config.delay;
 
@@ -38,6 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
   let decorationType: vscode.TextEditorDecorationType;
   let delay: number;
   let regEx: RegExp;
+
   //initialize
   setConfig();
   // config values will be updated on change
@@ -112,4 +119,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {
+  decorationObj.dispose();
+}

@@ -185,24 +185,6 @@ https://github.com/stken2050/vscode-lambda-for-fun-fsharp/issues
 
 ---
 
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 0.1.0
-
-Initial release
-
-### 0.2.1
-
-Setting Color did not work as type String
-
-### 0.3.0
-
-Setting Color Realtime reflection did not work, Code refactored
-
----
-
 **Enjoy F# Coding!**
 
 
