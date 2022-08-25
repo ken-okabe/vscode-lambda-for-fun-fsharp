@@ -149,8 +149,9 @@ Just use the GUI or CUI of VSCode that you know already.
 
 ## Extension Settings
 
-This extension is designed to run out-of-the-box for your F# Code!### 0.1.1
-### 0.1.2ble:
+This extension is designed to run out-of-the-box for your F# Code!
+
+The 3 settings are available:
 
 #### Decoration color of lambda backslash(\)
 
@@ -192,7 +193,7 @@ Users appreciate release notes as you update your extension.
 
 Initial release
 
-### 0.1.3
+### 0.1.4
 
 Minor edit on this `README.md`
 
