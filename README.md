@@ -153,7 +153,7 @@ This extension is designed to run out-of-the-box for your F# Code!
 
 The 3 settings are available:
 
-#### Decoration color of lambda backslash(\)
+#### Decoration color of lambda backslash(`\`)
 
 `lambda-for-fun-fsharp.color` : `#68D7AC`
 
@@ -193,7 +193,7 @@ Users appreciate release notes as you update your extension.
 
 Initial release
 
-### 0.1.4
+### 0.1.5
 
 Minor edit on this `README.md`
 

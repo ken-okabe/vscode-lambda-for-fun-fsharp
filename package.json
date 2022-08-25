@@ -2,7 +2,7 @@
 	"name": "lambda-for-fun-fsharp",
 	"displayName": "Lambda for fun F#",
 	"description": "Write Haskell style Lambda Expression in F#: `\\x` instead of `fun x`",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"license": "MIT",
 	"publisher": "KenOkabe",
 	"homepage": "https://github.com/stken2050/vscode-lambda-for-fun-fsharp",
