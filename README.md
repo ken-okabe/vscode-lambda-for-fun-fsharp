@@ -193,16 +193,11 @@ Users appreciate release notes as you update your extension.
 
 Initial release
 
-### 0.1.5
-
-Minor edit on this `README.md`
-
-### 0.2.0
+### 0.2.1
 
 Setting Color did not work as type String
+
 ---
-
-
 
 **Enjoy F# Coding!**
 
