@@ -6,113 +6,108 @@ import * as vscode from 'vscode';
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('lambda for fun F# is activated');
+  console.log('lambda for fun F# is activated');
 
-	type Config = {
-		color: string,
-		delay: number,
-		regex: string
-	};
+  const setConfig = () => {
+    type Config = {
+      color: string,
+      delay: number,
+      regex: string
+    };
+    let config: Config = vscode.workspace.getConfiguration().get('lambda-for-fun-fsharp') as Config;
 
-	// config values are initialized
-	let config: Config = vscode.workspace.getConfiguration().get('lambda-for-fun-fsharp') as Config;
-	console.log(config);
+    console.log(config);
+    // create a decorator type that we use to decorate the matched keyword
+    decorationType = vscode.window.createTextEditorDecorationType(
+      {
+        before: {
+          contentText: "\\",
+          color: config.color,
+        },
+        textDecoration: "none; display: none;",
+      }
+    );
 
-	let color = config.color;
-	let delay = config.delay;
-	let regEx = config.regex === ""
-		? /\bfun (?=(?:[^"]*"[^"]*")*[^"]*$)/g
-		: new RegExp(config.regex, 'g');
+    delay = config.delay;
 
-	// config values will be updated on change
-	vscode.workspace.onDidChangeConfiguration(event => {
+    regEx = config.regex === ""
+      ? /\bfun (?=(?:[^"]*"[^"]*")*[^"]*$)/g
+      : new RegExp(config.regex, 'g');
+  };
 
-		config = vscode.workspace.getConfiguration().get('lambda-for-fun-fsharp') as Config;
-		console.log(config);
+  let decorationType: vscode.TextEditorDecorationType;
+  let delay: number;
+  let regEx: RegExp;
+  //initialize
+  setConfig();
+  // config values will be updated on change
+  vscode.workspace.onDidChangeConfiguration(event => {
+    setConfig();
+  });
 
-		color = config.color;
-		delay = config.delay;
-		regEx = config.regex === ""
-			? /\bfun (?=(?:[^"]*"[^"]*")*[^"]*$)/g
-			: new RegExp(config.regex, 'g');
+  let timeout: NodeJS.Timer | undefined = undefined;
+  let activeEditor = vscode.window.activeTextEditor;
 
-	});
+  // regex match, then push/set the decoration
+  function updateDecorations() {
+    if (!activeEditor) {
+      return;
+    }
 
-	let timeout: NodeJS.Timer | undefined = undefined;
+    const text = activeEditor.document.getText();
+    const target: vscode.DecorationOptions[] = [];
+    let match;
 
-	let activeEditor = vscode.window.activeTextEditor;
+    while ((match = regEx.exec(text))) {
+      const startPos = activeEditor.document.positionAt(match.index);
+      const endPos = activeEditor.document.positionAt(match.index + match[0].length);
+      const decoration = {
+        range: new vscode.Range(startPos, endPos)
+      };
+      target.push(decoration);
+    }
 
-	// create a decorator type that we use to decorate the matched keyword
-	const decorationType = vscode.window.createTextEditorDecorationType(
-		{
-			before: {
-				contentText: "\\",
-				color: color,
-			},
-			textDecoration: "none; display: none;",
-		}
-	);
+    activeEditor.setDecorations(decorationType, target);
+  }
 
-	// regex match, then push/set the decoration
-	function updateDecorations() {
-		if (!activeEditor) {
-			return;
-		}
+  // when supported languages, some smart delay update
+  // the inner code is derived from MS official sample
+  function triggerUpdateDecorations(throttle: boolean, editor: vscode.TextEditor) {
 
-		const text = activeEditor.document.getText();
-		const target: vscode.DecorationOptions[] = [];
-		let match;
+    editor.document.languageId === "fsharp"
 
-		while ((match = regEx.exec(text))) {
-			const startPos = activeEditor.document.positionAt(match.index);
-			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
-			const decoration = {
-				range: new vscode.Range(startPos, endPos)
-			};
-			target.push(decoration);
-		}
+      ? (() => {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = undefined;
+        }
+        if (throttle) {
+          timeout = setTimeout(updateDecorations, delay);
+        } else {
+          updateDecorations();
+        }
+      })()
+      : (() => { })();
 
-		activeEditor.setDecorations(decorationType, target);
-	}
+  }
 
-	// when supported languages, some smart delay update
-	// the inner code is derived from MS official sample
-	function triggerUpdateDecorations(throttle: boolean, editor: vscode.TextEditor) {
+  // Various update events will trigger triggerUpdateDecorations
+  if (activeEditor) {
+    triggerUpdateDecorations(false, activeEditor);
+  }
 
-		editor.document.languageId === "fsharp"
+  vscode.window.onDidChangeActiveTextEditor(editor => {
+    activeEditor = editor;
+    if (editor) {
+      triggerUpdateDecorations(false, editor);
+    }
+  }, null, context.subscriptions);
 
-			? (() => {
-				if (timeout) {
-					clearTimeout(timeout);
-					timeout = undefined;
-				}
-				if (throttle) {
-					timeout = setTimeout(updateDecorations, delay);
-				} else {
-					updateDecorations();
-				}
-			})()
-			: (() => { })();
-
-	}
-
-	// Various update events will trigger triggerUpdateDecorations
-	if (activeEditor) {
-		triggerUpdateDecorations(false, activeEditor);
-	}
-
-	vscode.window.onDidChangeActiveTextEditor(editor => {
-		activeEditor = editor;
-		if (editor) {
-			triggerUpdateDecorations(false, editor);
-		}
-	}, null, context.subscriptions);
-
-	vscode.workspace.onDidChangeTextDocument(event => {
-		if (activeEditor && event.document === activeEditor.document) {
-			triggerUpdateDecorations(true, activeEditor);
-		}
-	}, null, context.subscriptions);
+  vscode.workspace.onDidChangeTextDocument(event => {
+    if (activeEditor && event.document === activeEditor.document) {
+      triggerUpdateDecorations(true, activeEditor);
+    }
+  }, null, context.subscriptions);
 
 }
 

@@ -45,14 +45,14 @@ Inspired by the great work of **Inline fold** extension @[Marketplace](https://m
 
 ```typescript
 // create a decorator type that we use to decorate the matched keyword
-const decorationType = vscode.window.createTextEditorDecorationType(
-	{
-		before: {
-			contentText: "\\",
-			color: color,
-		},
-		textDecoration: "none; display: none;",
-	}
+decorationType = vscode.window.createTextEditorDecorationType(
+  {
+    before: {
+      contentText: "\\",
+      color: config.color,
+    },
+    textDecoration: "none; display: none;",
+  }
 );
 ```
 
@@ -118,20 +118,20 @@ This delay mechanism is directly derived as it is in the Microsoft official samp
 // the inner code is derived from MS official sample
 function triggerUpdateDecorations(throttle: boolean, editor: vscode.TextEditor) {
 
-	editor.document.languageId === "fsharp"
+  editor.document.languageId === "fsharp"
 
-		? (() => {
-			if (timeout) {
-				clearTimeout(timeout);
-				timeout = undefined;
-			}
-			if (throttle) {
-				timeout = setTimeout(updateDecorations, delay);
-			} else {
-				updateDecorations();
-			}
-		})()
-		: (() => { })();
+    ? (() => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = undefined;
+      }
+      if (throttle) {
+        timeout = setTimeout(updateDecorations, delay);
+      } else {
+        updateDecorations();
+      }
+    })()
+    : (() => { })();
 
 }
 ```
@@ -196,6 +196,10 @@ Initial release
 ### 0.2.1
 
 Setting Color did not work as type String
+
+### 0.3.0
+
+Setting Color Realtime reflection did not work, Code refactored
 
 ---
 
