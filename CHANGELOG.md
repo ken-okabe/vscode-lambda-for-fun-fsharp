@@ -28,3 +28,7 @@ Setting Color Realtime reflection did not work, Code refactored
 ### 0.4.0
 
 After Setting changed, decorators should have been disposed (hard to test the actual setting behavior before the release)
+
+### 0.5.0
+
+Confirming the decorators behavior on setting modification
