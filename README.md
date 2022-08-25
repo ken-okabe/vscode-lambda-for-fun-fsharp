@@ -18,9 +18,9 @@
 
 
 ## Features and benefits
-✓  [Proven syntax in Haskell for lambda expressions](https://wiki.haskell.org/Monad_laws) that corresponds directly to F# legacy `fun ` syntax
+✓  [Proven syntax in Haskell for Lambda Expressions](https://wiki.haskell.org/Monad_laws) that corresponds directly to [F# legacy `fun_` syntax](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/lambda-expressions-the-fun-keyword)
 
-✓  Officially [approved-in-principle](https://github.com/fsharp/fslang-suggestions/labels/approved-in-principle) for the proposal to [Make the `fun ` optional](https://github.com/fsharp/fslang-suggestions/issues/168)
+✓  Officially [approved-in-principle](https://github.com/fsharp/fslang-suggestions/labels/approved-in-principle) for the proposal to [Make the `fun_` optional](https://github.com/fsharp/fslang-suggestions/issues/168)
 
 ✓  You can enjoy the concise Haskell style Lambda Expression before the official implementation without messing your code
 
@@ -28,7 +28,7 @@
 
 ✓  Simple design, No command, Just do the single task, Works out-of-the-box!
 
-## But, how is this possible?
+## How is this possible?
 
 CSS with VSCode editor decorator API. VSCode is built on the Web Technology!
 
@@ -45,24 +45,24 @@ Inspired by the great work of **Inline fold** extension @[Marketplace](https://m
 
 ```typescript
 // create a decorator type that we use to decorate the matched keyword
-	const decorationType = vscode.window.createTextEditorDecorationType(
-		{
-			before: {
-				contentText: "\\",
-				color: color,
-			},
-			textDecoration: "none; display: none;",
-		}
-	);
+const decorationType = vscode.window.createTextEditorDecorationType(
+	{
+		before: {
+			contentText: "\\",
+			color: color,
+		},
+		textDecoration: "none; display: none;",
+	}
+);
 ```
 
 So, this CSS works as below:
 
-STEP 1: Add `\` (virtual not real text, like the other type hints) `before` the `fun `
+STEP 1: Add `\` (virtual not real text, like the other type hints) `before` the `fun_`
 
 ![](https://user-images.githubusercontent.com/1316994/186554283-731f85f8-5c11-4f55-8d7b-fc93c030ce75.png)
 
-STEP 2: Hide the `fun ` (real text) virtually
+STEP 2: Hide the `fun_` (real text) virtually
 
 ![](https://user-images.githubusercontent.com/1316994/186554178-1c263f6d-38a2-43f0-8285-18ccd1eea9f1.png)
 
@@ -73,7 +73,7 @@ I also tried `after` scenario instead of `before`, but it doesn't work well at a
 
 ## Known Issues
 
-The `fun ` is hidden by CSS, but actually remains to exist as the real element on the VSCode text editor, and the same applies to the real cursor move. Therefore, the cursor move around `\` make you feel against your standard editing experience.
+The `fun_` is hidden by CSS, but actually remains to exist as the real element on the VSCode text editor, and the same applies to the real cursor move. Therefore, the cursor move around `\` make you feel against your standard editing experience.
 
 ## How to delete such a virtual existence??
 
@@ -81,7 +81,7 @@ Just try to delete, and it works!
 
 ![](https://user-images.githubusercontent.com/1316994/186556895-96fda207-eefd-4b7b-9001-8729861b86c1.png)
 
-When you try to delete the virtual `\`, you will actually delete the real SPACE at the end of `fun `. This will collapse the regex match for `fun ` including the last space, so `funx` will emerge on the surface of the text editor.
+When you try to delete the virtual `\`, you will actually delete the real SPACE at the end of `fun_`. This will collapse the regex match for `fun_` including the last space, so `funx` will emerge on the surface of the text editor.
 
 ## How to type the virtual `\` ?
 
@@ -134,7 +134,6 @@ function triggerUpdateDecorations(throttle: boolean, editor: vscode.TextEditor) 
 		: (() => { })();
 
 }
-
 ```
 
 Probably it's implemented as so to avoid jamming events by user key strokes in a short period of the time.
@@ -150,9 +149,8 @@ Just use the GUI or CUI of VSCode that you know already.
 
 ## Extension Settings
 
-This extension is designed to run out-of-the-box for your F# Code!
-
-The 3 settings are available:
+This extension is designed to run out-of-the-box for your F# Code!### 0.1.1
+### 0.1.2ble:
 
 #### Decoration color of lambda backslash(\)
 
@@ -162,18 +160,18 @@ The 3 settings are available:
 
 `lambda-for-fun-fsharp.delay` : `100`
 
-#### Regex to identify `fun `
+#### Regex to identify `fun_`
 
-`lambda-for-fun-fsharp.regex` : `""`
+`lambda-for-fun-fsharp.regex` : *empty*
 
 
-## Regex to match `fun ` keyword
+## Regex to match `fun_` keyword
 
 The value for `lambda-for-fun-fsharp.regex`  is *empty* as default, and a hardcoded regex as seen in the URL below will be used :
 
 https://regex101.com/r/U9IeWI/1
 
-When you want to try a better regex, after testing at the site, Copy it manually except the head `/` and tail `\g`, the paste at the form of `lambda-for-fun-fsharp.regex`.
+When you want to try a better regex, after testing at the site, Copy it manually except the head `/` and tail `\g`, then Paste at the form of `lambda-for-fun-fsharp.regex`.
 
 ![](https://user-images.githubusercontent.com/1316994/186560830-6e562ddd-31f6-433f-a784-1eef55e2a732.png)
 
@@ -194,6 +192,9 @@ Users appreciate release notes as you update your extension.
 
 Initial release
 
+### 0.1.3
+
+Minor edit on this `README.md`
 
 ---
 
