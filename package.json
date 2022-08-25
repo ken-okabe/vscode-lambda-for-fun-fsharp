@@ -1,0 +1,100 @@
+{
+	"name": "lambda-for-fun-fsharp",
+	"displayName": "Lambda for fun F#",
+	"description": "Write Haskell style Lambda Expression in F#: `\\x` instead of `fun x`",
+	"version": "0.1.0",
+	"license": "MIT",
+	"publisher": "KenOkabe",
+	"homepage": "https://github.com/stken2050/vscode-lambda-for-fun-fsharp",
+	"bugs": "https://github.com/stken2050/vscode-lambda-for-fun-fsharp/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/stken2050/vscode-lambda-for-fun-fsharp"
+	},
+	"contributors": [
+		{
+			"name": "Ken Okabe",
+			"url": "https://github.com/stken2050"
+		}
+	],
+	"engines": {
+		"vscode": "^1.70.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"icon": "images/icon-256.png",
+	"contributes": {
+		"configuration": {
+			"title": "Lambda for fun F# settings",
+			"languages": [
+				{
+					"id": "fsharp",
+					"aliases": [
+						"F#",
+						"FSharp",
+						"fsharp"
+					],
+					"extensions": [
+						".fs",
+						".fsx",
+						".fsi"
+					]
+				}
+			],
+			"properties": {
+				"lambda-for-fun-fsharp.color": {
+					"default": "#68D7AC",
+					"description": "Decoration color of lambda backslash(\\)",
+					"type": "vscode.ThemeColor"
+				},
+				"lambda-for-fun-fsharp.delay": {
+					"default": "100",
+					"description": "Delay milliseconds of updateDecorations",
+					"type": "number"
+				},
+				"lambda-for-fun-fsharp.regex": {
+					"default": "",
+					"description": "Regex to identify `fun `",
+					"type": "string"
+				}
+			}
+		},
+		"keybindings": [
+			{
+				"key": "alt+\\",
+				"command": "editor.action.insertSnippet",
+				"when": "editorFocus && editorLangId == 'fsharp'",
+				"args": {
+					"snippet": "fun $1"
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.70.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "16.x",
+		"@typescript-eslint/eslint-plugin": "^5.31.0",
+		"@typescript-eslint/parser": "^5.31.0",
+		"eslint": "^8.20.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"typescript": "^4.7.4",
+		"@vscode/test-electron": "^2.1.5"
+	}
+}
