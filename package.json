@@ -2,7 +2,7 @@
 	"name": "lambda-for-fun-fsharp",
 	"displayName": "Lambda for fun F#",
 	"description": "Write Haskell style Lambda Expression in F#: `\\x` instead of `fun x`",
-	"version": "0.1.5",
+	"version": "0.2.0",
 	"license": "MIT",
 	"publisher": "KenOkabe",
 	"homepage": "https://github.com/stken2050/vscode-lambda-for-fun-fsharp",
@@ -51,7 +51,7 @@
 				"lambda-for-fun-fsharp.color": {
 					"default": "#68D7AC",
 					"description": "Decoration color of lambda backslash(\\)",
-					"type": "vscode.ThemeColor"
+					"type": "string"
 				},
 				"lambda-for-fun-fsharp.delay": {
 					"default": "100",

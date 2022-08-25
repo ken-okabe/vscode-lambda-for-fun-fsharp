@@ -197,6 +197,9 @@ Initial release
 
 Minor edit on this `README.md`
 
+### 0.2.0
+
+Setting Color did not work as type String
 ---
 
 
