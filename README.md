@@ -1,4 +1,4 @@
-# Lambda for fun F#
+# [Deprecated]Lambda for fun F#
 
 ![](https://user-images.githubusercontent.com/1316994/186539882-d2c7acd2-a698-4547-83ba-40ba7e3400ad.png)
 
@@ -16,11 +16,59 @@
 
 ![](https://user-images.githubusercontent.com/1316994/186546918-b55d6ce7-abe3-486a-b5e6-316d9b98f4e9.png)
 
+## Deprecated
+
+Please use the below instead
+
+---
+
+> ## [Conceal for VSCode](https://marketplace.visualstudio.com/items?itemName=BRBoer.vsc-conceal)
+
+>Conceal makes *visual* substitutions to your source code, e.g. displaying `fun` as `λ`, while never touching your code.
+
+>This feature is inspired by [prettify-symbols-mode for Emacs](https://www.emacswiki.org/emacs/PrettySymbol) and is the unofficial successor of [vsc-prettify-symbols-mode](https://github.com/siegebell/vsc-prettify-symbols-mode).
+
+Configuration for `fun ` to `\`
+
+```json
+"conceal.substitutions": [{
+    "language": "fsharp",
+            "substitutions": [
+                {
+                    "ugly": "fun ",
+                    "pretty": "\\",
+                    "pre": "\\b"
+                }
+            ]
+}]
+```
+
+### `[Alt] + \` will type the virtual `\`
+
+`keybinding.json` as below:
+
+
+```json
+[
+	{
+		"key": "alt+\\",
+		"command": "editor.action.insertSnippet",
+		"when": "editorFocus && editorLangId == 'fsharp'",
+		"args": {
+			"snippet": "fun $1"
+		}
+	}
+]
+ ```
+
+
+----
+----
+
+----
 
 ## Features and benefits
 ✓  [Proven syntax in Haskell for Lambda Expressions](https://wiki.haskell.org/Monad_laws) that corresponds directly to [F# legacy `fun_` syntax](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/lambda-expressions-the-fun-keyword)
-
-✓  Officially [approved-in-principle](https://github.com/fsharp/fslang-suggestions/labels/approved-in-principle) for the proposal to [Make the `fun_` optional](https://github.com/fsharp/fslang-suggestions/issues/168)
 
 ✓  You can enjoy the concise Haskell style Lambda Expression before the official implementation without messing your code
 
